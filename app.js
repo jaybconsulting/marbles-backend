@@ -5,6 +5,7 @@ import logger from 'morgan';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import authRouter from './routes/auth.js';
+import refreshRouter from './routes/refresh.js';
 import { expressjwt } from 'express-jwt';
 import cors from 'cors';
 
@@ -21,8 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
 app.use('/auth', authRouter);
+app.use('/refresh', refreshRouter);
 
 app.use(expressjwt({
     secret: process.env.ACCESS_TOKEN_SECRET,

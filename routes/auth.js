@@ -12,8 +12,6 @@ router.post('/',
         const user = await (async () => {
             const userInDB = await db.oneOrNone('SELECT * FROM users WHERE email = $1', [payload.email]);
 
-            console.log('User in DB: ', userInDB);
-
             if (!userInDB) {
                 const refreshToken = jwt.sign(
                     {
@@ -33,12 +31,12 @@ router.post('/',
         })();
 
         const accessToken = jwt.sign({
-            email: user.email,
-        }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '30s'
-        });
+                email: user.email,
+            }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: '30s'
+            });
 
-        res.cookie('credential', user.refreshToken, 
+        res.cookie('refreshToken', user.refreshToken, 
         {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
