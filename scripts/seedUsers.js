@@ -24,7 +24,7 @@ async function seedUsers() {
             const refreshToken = faker.string.uuid();
             
             await db.none(
-                'INSERT INTO users (email, "firstName", "lastName", picture, "refreshToken") VALUES ($1, $2, $3, $4, $5)',
+                'INSERT INTO users (email, first_name, last_name, picture, refresh_token) VALUES ($1, $2, $3, $4, $5)',
                 [email, firstName, lastName, picture, refreshToken]
             );
         }

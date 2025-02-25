@@ -31,7 +31,7 @@ async function seedFriends() {
                 try {
                     // Check if friendship already exists
                     const existingFriendship = await db.oneOrNone(
-                        'SELECT * FROM friends WHERE ("userIdA" = $1 AND "userIdB" = $2) OR ("userIdA" = $2 AND "userIdB" = $1)',
+                        'SELECT * FROM friends WHERE (user_id_a = $1 AND user_id_b = $2) OR (user_id_a = $2 AND user_id_b = $1)',
                         [user.id, friend.id]
                     );
 
@@ -39,7 +39,7 @@ async function seedFriends() {
                         // Create single friendship row (always put smaller ID as user_id for consistency)
                         const [smallerId, largerId] = [user.id, friend.id].sort((a, b) => a - b);
                         await db.none(
-                            'INSERT INTO friends ("userIdA", "userIdB") VALUES ($1, $2)',
+                            'INSERT INTO friends (user_id_a, user_id_b) VALUES ($1, $2)',
                             [smallerId, largerId]
                         );
                         console.log(`Created friendship between users ${user.id} and ${friend.id}`);

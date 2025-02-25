@@ -22,14 +22,15 @@ router.get('/', async (req, res) => {
         const accessToken = jwt.sign({
             email: user.email,
         }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '30s'
+            expiresIn: '10s'
         });
 
         res.json({ 
+            id: user.id,
             accessToken,
             email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            first_name: user.first_name,
+            last_name: user.last_name,
             picture: user.picture
         });
     });

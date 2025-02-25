@@ -22,7 +22,7 @@ router.post('/',
                         expiresIn: '365d'
                     });
 
-                const createdUser = await db.one('INSERT INTO users (email, "firstName", "lastName", "refreshToken", picture) VALUES ($1, $2, $3, $4, $5) RETURNING id, email, "firstName", "lastName", "refreshToken", picture', [payload.email, payload.given_name, payload.family_name, refreshToken, payload.picture]);
+                const createdUser = await db.one('INSERT INTO users (email, first_name, last_name, refresh_token, picture) VALUES ($1, $2, $3, $4, $5) RETURNING id, email, first_name, last_name, refresh_token, picture', [payload.email, payload.given_name, payload.family_name, refreshToken, payload.picture]);
                 console.log('Created user: ', createdUser);
                 return createdUser;
             }
@@ -36,7 +36,7 @@ router.post('/',
                 expiresIn: '30s'
             });
 
-        res.cookie('refreshToken', user.refreshToken, 
+        res.cookie('refreshToken', user.refresh_token, 
         {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
@@ -45,9 +45,10 @@ router.post('/',
         });
 
         res.json({
+            id: user.id,
             email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            first_name: user.first_name,
+            last_name: user.last_name,
             picture: user.picture,
             accessToken: accessToken
         });
