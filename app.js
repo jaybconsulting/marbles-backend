@@ -2,10 +2,11 @@ import createError from 'http-errors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
 import authRouter from './routes/auth.js';
-import refreshRouter from './routes/refresh.js';
+import refreshRouter from './routes/refresh.js';``
+import statsRouter from './routes/stats.js';
+import friendsRouter from './routes/friends.js';
+import gameRouter from './routes/game.js';
 import { expressjwt } from 'express-jwt';
 import cors from 'cors';
 
@@ -30,8 +31,10 @@ app.use(expressjwt({
     algorithms: ['HS256']
 }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/stats', statsRouter);
+app.use('/friends', friendsRouter);
+app.use('/game', gameRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
