@@ -9,8 +9,12 @@ import friendsRouter from './routes/friends.js';
 import gameRouter from './routes/game.js';
 import { expressjwt } from 'express-jwt';
 import cors from 'cors';
+import { Server } from 'socket.io';
+import http from 'http';
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(cors({
     origin: process.env.FRONTEND_URL,
@@ -25,6 +29,11 @@ app.use(cookieParser());
 
 app.use('/auth', authRouter);
 app.use('/refresh', refreshRouter);
+
+// io.on('connection', (socket) => {
+//     console.log(socket.handshake.auth);
+//     console.log('Socket connected', socket);
+// });
 
 app.use(expressjwt({
     secret: process.env.ACCESS_TOKEN_SECRET,
@@ -54,4 +63,4 @@ app.use(function(err, req, res, next) {
   res.json({ message: err.message, error: errToSend });
 });
 
-export default app;
+export { app, server, io };

@@ -6,7 +6,7 @@
 
 import 'dotenv/config';
 
-import app from '../app.js';
+import { app, server } from '../app.js';
 import debug from 'debug';
 import http from 'http';
 
@@ -16,12 +16,6 @@ import http from 'http';
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
