@@ -8,6 +8,7 @@
     "migrate": "node-pg-migrate",
     "seed:users": "node scripts/seedUsers.js",
     "seed:friends": "node scripts/seedFriends.js",
+    "seed:gameResults": "node scripts/seedGameResults.js",
     "seed:db": "node scripts/seedDb.js",
     "debug:friends": "node --inspect-brk scripts/seedFriends.js"
   },
